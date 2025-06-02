@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelo de Remuneração e Calculadora de Ganhos - Bulking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Preto */
+            color: #cccccc; /* Cinza claro para texto principal */
+        }
+        .header-bg {
+            background-color: #111827; /* Cinza bem escuro (gray-900) */
+        }
+        .accent-text { 
+            color: #ffffff; /* Branco */
+        }
+        .card {
+            background-color: #1f2937; /* Cinza escuro (slate-800) */
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 0 8px rgba(200, 200, 200, 0.05); 
+            padding: 1.5rem; /* 24px */
+            margin-bottom: 2rem; 
+            border: 1px solid #374151; /* Cinza (gray-700) */
+        }
+        .table-header th {
+            background-color: #374151; /* Cinza (gray-700) */
+            color: #f3f4f6; /* Cinza bem claro (gray-100) */
+            font-weight: 600;
+        }
+        .table-body tr td {
+            color: #d1d5db; /* Cinza claro (gray-300) */
+            border-color: #374151; /* Cinza (gray-700) */
+        }
+        .table-body tr:hover td {
+            background-color: #2a3a4a; 
+        }
+
+        .level-button {
+            background-color: #374151; 
+            color: #d1d5db; 
+            padding: 0.6rem 1.9rem; 
+            border-radius: 0.5rem; /* 8px */
+            border: 1px solid #4b5563; 
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .level-button:hover {
+            background-color: #4b5563; 
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .level-button.active {
+            background-color: #e5e7eb; 
+            color: #111827; 
+            border-color: #e5e7eb; 
+            box-shadow: 0 0 10px rgba(229, 231, 235, 0.3), 0 2px 5px rgba(0,0,0,0.4); 
+            transform: translateY(-1px);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px; 
+            background: #374151; 
+            border-radius: 5px;
+            outline: none;
+            transition: background .2s;
+        }
+         input[type="range"]:hover {
+            background: #4b5563; 
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px; 
+            height: 24px; 
+            background: #e5e7eb; 
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #111827; 
+            box-shadow: 0 0 8px rgba(229, 231, 235, 0.5); 
+            transition: transform 0.1s ease-in-out;
+        }
+        input[type="range"]::-webkit-slider-thumb:active {
+            transform: scale(1.1);
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: #e5e7eb; 
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid #111827;
+            box-shadow: 0 0 8px rgba(229, 231, 235, 0.5);
+        }
+         input[type="range"]::-moz-range-thumb:active {
+            transform: scale(1.1);
+        }
+
+        .result-item {
+            background-color: #1f2937; 
+            padding: 1.25rem; 
+            border-radius: 0.5rem; /* 8px */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #374151; 
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+        }
+        .result-item-label {
+            color: #9ca3af; 
+            font-size: 1rem; /* 16px */
+            font-weight: 500;
+        }
+        .result-item-value {
+            color: #f3f4f6; 
+            font-weight: 700;
+            font-size: 1.25rem; /* 20px */
+        }
+        .total-gain-item {
+            background-image: linear-gradient(to right, #4b5563, #6b7280); 
+            color: #ffffff; /* Branco */
+            padding: 1.5rem; /* 24px */
+            border-radius: 0.5rem; /* 8px */
+            box-shadow: 0 5px 15px rgba(107, 114, 128, 0.2); 
+        }
+        .total-gain-item .result-item-label {
+            color: #e5e7eb; 
+            font-size: 1.125rem; /* 18px */
+        }
+        .total-gain-item .result-item-value {
+            color: #ffffff; /* Branco */
+            font-size: 2rem; /* 32px */
+            font-weight: 800; 
+        }
+        .section-title {
+            color: #f3f4f6; 
+            font-weight: 700;
+            margin-bottom: 1.5rem; /* 24px */
+            font-size: 1.75rem; 
+        }
+        .step-label {
+            color: #e5e7eb; 
+            font-weight: 600;
+            font-size: 1.125rem; /* 18px */
+            margin-bottom: 0.75rem; /* 12px */
+        }
+        .atingimento-value-display { 
+            color: #ffffff; /* Branco */
+            font-weight: 700;
+            font-size: 1.5rem; 
+        }
+        .sales-value-display { /* Novo estilo para o valor em vendas */
+            color: #bdc3c7; /* Cinza mais suave */
+            font-size: 0.875rem; /* 14px */
+            font-weight: 500;
+            margin-top: 0.25rem; /* Pequena margem superior */
+            display: block; /* Para ocupar a linha inteira abaixo da porcentagem */
+            min-height: 1.25rem; /* Para evitar que o layout salte se o valor estiver vazio inicialmente */
+        }
+        .text-highlight { 
+            color: #e5e7eb; 
+            font-weight: 600; 
+        }
+
+        .multiplication-table-container::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        .multiplication-table-container::-webkit-scrollbar-track {
+            background: #1f2937; 
+            border-radius: 10px;
+        }
+        .multiplication-table-container::-webkit-scrollbar-thumb {
+            background: #4b5563; 
+            border-radius: 10px;
+            border: 2px solid #1f2937; 
+        }
+        .multiplication-table-container::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; 
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <header class="header-bg text-white py-8 shadow-xl">
+        <div class="container mx-auto max-w-5xl text-center">
+            <h1 class="text-5xl font-extrabold tracking-tight">BULKING ATLETAS</h1>
+            <p class="text-2xl mt-3 text-slate-300">Modelo de Remuneração OTE & Calculadora de Ganhos</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto max-w-5xl p-4 md:p-8">
+        <section id="explanation" class="card">
+            <h2 class="section-title">Entendendo Nosso Modelo de Remuneração</h2>
+            <div class="space-y-4 text-slate-300 leading-relaxed">
+                <p>
+                    Bem-vindo ao nosso modelo de remuneração <strong class="text-highlight">OTE (On-Target Earnings)</strong>! Ele foi cuidadosamente desenhado para valorizar seu desempenho e dedicação, recompensando o alcance de metas de forma transparente e motivadora.
+                </p>
+                <p>
+                    Sua remuneração é composta por uma <strong class="text-slate-100">parcela fixa</strong> garantida e uma <strong class="text-slate-100">parcela variável</strong> dinâmica. Esta parcela variável é a sua oportunidade de aumentar significativamente seus ganhos, pois ela é calculada com base no percentual de atingimento da sua meta individual.
+                </p>
+                <p>
+                    A comissão variável é ativada ao atingir <strong class="text-highlight">70% da sua meta</strong>. A partir desse ponto, um fator de multiplicação progressivo entra em jogo, turbinando seus ganhos à medida que você supera suas metas. Explore a calculadora abaixo e veja seu potencial de ganhos!
+                </p>
+            </div>
+        </section>
+
+        <section id="calculator" class="card">
+            <h2 class="section-title">Simule Seus Ganhos Agora!</h2>
+            
+            <div class="mb-8">
+                <label class="step-label block">1. Escolha seu Nível de Atleta:</label>
+                <div id="levelButtonsContainer" class="flex flex-wrap gap-3">
+                </div>
+            </div>
+
+            <div class="mb-10">
+                <label for="atingimentoSlider" class="step-label block">2. Indique o Percentual de Meta Atingido:</label>
+                <div class="flex items-center gap-4">
+                    <input type="range" id="atingimentoSlider" name="atingimentoSlider" min="0" max="250" value="100" class="flex-grow">
+                    <div class="w-28 text-right">
+                        <span id="atingimentoValueDisplay" class="atingimento-value-display">100%</span>
+                        <span id="salesValueForPercentage" class="sales-value-display">(R$ 0,00)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultsNew" class="mt-6 space-y-4">
+                 <h3 class="text-xl font-semibold text-slate-100 mb-4">Sua Projeção de Ganhos:</h3>
+                <div class="result-item">
+                    <span class="result-item-label">Salário Fixo Mensal</span>
+                    <span id="salarioFixoDisplay" class="result-item-value">R$ 0,00</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-item-label">Comissão Variável Estimada</span>
+                    <span id="comissaoVariavelDisplay" class="result-item-value">R$ 0,00</span>
+                </div>
+                <div class="result-item total-gain-item mt-4">
+                    <span class="result-item-label">POTENCIAL DE GANHO TOTAL MENSAL</span>
+                    <span id="ganhoTotalDisplay" class="result-item-value">R$ 0,00</span>
+                </div>
+                <p id="commissionMessageNew" class="text-sm text-center mt-4 text-slate-400 italic"></p>
+            </div>
+        </section>
+        
+        <section id="remuneration-table" class="card">
+            <h2 class="section-title">Detalhes dos Níveis de Remuneração (OTE)</h2>
+            <div class="overflow-x-auto rounded-lg shadow-md">
+                <table class="min-w-full divide-y divide-slate-700">
+                    <thead class="table-header">
+                        <tr>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Nível</th>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">OTE (R$)</th>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Fixo (R$)</th>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Variável (R$)</th>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">% Fixo</th>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">% Variável</th>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Meta (R$)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-slate-800 divide-y divide-slate-700 table-body" id="remunerationLevelsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="multiplication-factors" class="card">
+            <h2 class="section-title">Fatores de Multiplicação da Comissão</h2>
+            <p class="text-slate-300 leading-relaxed mb-6">
+                Sua comissão variável é potencializada por um fator de multiplicação que cresce com seu desempenho. Lembre-se: a comissão é ativada a partir de <strong class="text-highlight">70%</strong> do atingimento da meta. Abaixo disso, o fator é 0.
+            </p>
+            <div class="multiplication-table-container max-h-96 overflow-y-auto rounded-lg shadow-md">
+                <table class="min-w-full divide-y divide-slate-700">
+                    <thead class="table-header sticky top-0 z-10">
+                        <tr>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">% Atingimento da Meta</th>
+                            <th scope="col" class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider">Fator de Multiplicação</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-slate-800 divide-y divide-slate-700 table-body" id="multiplicationFactorsTableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center p-8 mt-10 text-slate-400 text-sm border-t border-slate-700">
+        <p>&copy; <span id="currentYear"></span> Bulking. Todos os direitos reservados.</p>
+        <p class="mt-1">Desenvolvido para performance e sucesso.</p>
+    </footer>
+
+    <script>
+        // Dados de Remuneração
+        const remunerationData = [
+            { nivel: 1, ote: 1000, fixo: 600, variavel: 400, percFixo: '60%', percVariavel: '40%', meta: 5000 },
+            { nivel: 2, ote: 1500, fixo: 900, variavel: 600, percFixo: '60%', percVariavel: '40%', meta: 10000 },
+            { nivel: 3, ote: 2000, fixo: 1200, variavel: 800, percFixo: '60%', percVariavel: '40%', meta: 15000 },
+            { nivel: 4, ote: 2500, fixo: 1500, variavel: 1000, percFixo: '60%', percVariavel: '40%', meta: 20000 },
+            { nivel: 5, ote: 3000, fixo: 1800, variavel: 1200, percFixo: '60%', percVariavel: '40%', meta: 30000 },
+            { nivel: 6, ote: 4000, fixo: 2400, variavel: 1600, percFixo: '60%', percVariavel: '40%', meta: 45000 },
+            { nivel: 7, ote: 5000, fixo: 3000, variavel: 2000, percFixo: '60%', percVariavel: '40%', meta: 60000 },
+            { nivel: 8, ote: 6000, fixo: 3600, variavel: 2400, percFixo: '60%', percVariavel: '40%', meta: 75000 },
+            { nivel: 9, ote: 7000, fixo: 4200, variavel: 2800, percFixo: '60%', percVariavel: '40%', meta: 85000 },
+            { nivel: 10, ote: 8000, fixo: 4800, variavel: 3200, percFixo: '60%', percVariavel: '40%', meta: 100000 }
+        ];
+
+        // Fatores de Multiplicação
+        const multiplicationFactors = {
+            70: 0.50, 71: 0.51, 72: 0.52, 73: 0.53, 74: 0.54, 75: 0.55, 76: 0.56, 77: 0.57, 78: 0.58, 79: 0.59,
+            80: 0.60, 81: 0.61, 82: 0.62, 83: 0.63, 84: 0.64, 85: 0.65, 86: 0.66, 87: 0.67, 88: 0.68, 89: 0.69,
+            90: 0.70, 91: 0.71, 92: 0.72, 93: 0.73, 94: 0.74, 95: 0.75, 96: 0.76, 97: 0.77, 98: 0.78, 99: 0.79,
+            100: 1.00, 101: 1.01, 102: 1.02, 103: 1.03, 104: 1.04, 105: 1.05, 106: 1.06, 107: 1.07, 108: 1.08, 109: 1.09,
+            110: 1.10, 111: 1.11, 112: 1.12, 113: 1.13, 114: 1.14, 115: 1.15, 116: 1.16, 117: 1.17, 118: 1.18, 119: 1.19,
+            120: 1.30, 121: 1.31, 122: 1.32, 123: 1.33, 124: 1.34, 125: 1.35, 126: 1.36, 127: 1.37, 128: 1.38, 129: 1.39,
+            130: 1.40, 131: 1.41, 132: 1.42, 133: 1.43, 134: 1.44, 135: 1.45, 136: 1.46, 137: 1.47, 138: 1.48, 139: 1.49,
+            140: 1.50, 141: 1.51, 142: 1.52, 143: 1.53, 144: 1.54, 145: 1.55, 146: 1.56, 147: 1.57, 148: 1.58, 149: 1.59,
+            150: 1.70, 151: 1.71, 152: 1.72, 153: 1.73, 154: 1.74, 155: 1.75, 156: 1.76, 157: 1.77, 158: 1.78, 159: 1.79,
+            160: 1.80, 161: 1.81, 162: 1.82, 163: 1.83, 164: 1.84, 165: 1.85, 166: 1.86, 167: 1.87, 168: 1.88, 169: 1.89,
+            170: 1.90, 171: 1.91, 172: 1.92, 173: 1.93, 174: 1.94, 175: 1.95, 176: 1.96, 177: 1.97, 178: 1.98, 179: 1.99,
+            180: 2.00, 181: 2.01, 182: 2.02, 183: 2.03, 184: 2.04, 185: 2.05, 186: 2.06, 187: 2.07, 188: 2.08, 189: 2.09,
+            190: 2.10, 191: 2.11, 192: 2.12, 193: 2.13, 194: 2.14, 195: 2.15, 196: 2.16, 197: 2.17, 198: 2.18, 199: 2.19,
+            200: 2.20, 201: 2.21, 202: 2.22, 203: 2.23, 204: 2.24, 205: 2.25, 206: 2.26, 207: 2.27, 208: 2.28, 209: 2.29,
+            210: 2.30, 211: 2.31, 212: 2.32, 213: 2.33, 214: 2.34, 215: 2.35, 216: 2.36, 217: 2.37, 218: 2.38, 219: 2.39,
+            220: 2.40, 221: 2.41, 222: 2.42, 223: 2.43, 224: 2.44, 225: 2.45, 226: 2.46, 227: 2.47, 228: 2.48, 229: 2.49,
+            230: 2.50, 231: 2.51, 232: 2.52, 233: 2.53, 234: 2.54, 235: 2.55, 236: 2.56, 237: 2.57, 238: 2.58, 239: 2.59,
+            240: 2.60, 241: 2.61, 242: 2.62, 243: 2.63, 244: 2.64, 245: 2.65, 246: 2.66, 247: 2.67, 248: 2.68, 249: 2.69,
+            250: 2.70
+        };
+        
+        const formatCurrency = (value) => {
+            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        };
+
+        const remunerationTableBody = document.getElementById('remunerationLevelsTableBody');
+        remunerationData.forEach(level => {
+            const row = remunerationTableBody.insertRow();
+            row.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
+            row.innerHTML = `
+                <td class="px-5 py-4 whitespace-nowrap text-sm">${level.nivel}</td>
+                <td class="px-5 py-4 whitespace-nowrap text-sm">${formatCurrency(level.ote)}</td>
+                <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-slate-100">${formatCurrency(level.fixo)}</td>
+                <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-highlight">${formatCurrency(level.variavel)}</td>
+                <td class="px-5 py-4 whitespace-nowrap text-sm">${level.percFixo}</td>
+                <td class="px-5 py-4 whitespace-nowrap text-sm">${level.percVariavel}</td>
+                <td class="px-5 py-4 whitespace-nowrap text-sm font-semibold">${formatCurrency(level.meta)}</td>
+            `;
+        });
+
+        const multiplicationTableBody = document.getElementById('multiplicationFactorsTableBody');
+        for (const perc in multiplicationFactors) {
+            const row = multiplicationTableBody.insertRow();
+            row.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
+            row.innerHTML = `
+                <td class="px-5 py-3 whitespace-nowrap text-sm">${perc}%</td>
+                <td class="px-5 py-3 whitespace-nowrap text-sm font-semibold text-highlight">${multiplicationFactors[perc].toFixed(2)}</td>
+            `;
+        }
+        const rowLessThan70 = multiplicationTableBody.insertRow(0);
+        rowLessThan70.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
+        rowLessThan70.innerHTML = `
+            <td class="px-5 py-3 whitespace-nowrap text-sm font-medium text-slate-100">Abaixo de 70%</td>
+            <td class="px-5 py-3 whitespace-nowrap text-sm font-bold text-slate-100">0.00</td>
+        `;
+
+        const levelButtonsContainer = document.getElementById('levelButtonsContainer');
+        const atingimentoSlider = document.getElementById('atingimentoSlider');
+        const atingimentoValueDisplay = document.getElementById('atingimentoValueDisplay');
+        const salesValueForPercentageDisplay = document.getElementById('salesValueForPercentage'); // Novo elemento
+        
+        const salarioFixoDisplay = document.getElementById('salarioFixoDisplay');
+        const comissaoVariavelDisplay = document.getElementById('comissaoVariavelDisplay');
+        const ganhoTotalDisplay = document.getElementById('ganhoTotalDisplay');
+        const commissionMessageDisplayNew = document.getElementById('commissionMessageNew');
+
+        let currentSelectedNivel = remunerationData[0]; 
+        let currentAtingimentoPercent = parseInt(atingimentoSlider.value);
+
+        function updateCalculator() {
+            if (!currentSelectedNivel) return;
+
+            const salarioFixo = currentSelectedNivel.fixo;
+            const variavelBase = currentSelectedNivel.variavel;
+            const metaNivel = currentSelectedNivel.meta; // Pega a meta do nível
+            const percentualMeta = currentAtingimentoPercent; 
+
+            // Calcula e exibe o valor em vendas correspondente à porcentagem
+            const valorVendasCalculado = (metaNivel * percentualMeta) / 100;
+            salesValueForPercentageDisplay.textContent = `(${formatCurrency(valorVendasCalculado)})`;
+
+
+            let fator = 0;
+            let message = "";
+
+            if (percentualMeta < 70) {
+                fator = 0;
+                message = "Com atingimento abaixo de 70%, a comissão variável não é ativada.";
+            } else {
+                if (multiplicationFactors.hasOwnProperty(percentualMeta)) {
+                    fator = multiplicationFactors[percentualMeta];
+                    message = `Fator de ${fator.toFixed(2)} aplicado para ${percentualMeta}% de atingimento.`;
+                } else if (percentualMeta > 250) {
+                    fator = multiplicationFactors[250]; 
+                    message = `Uau! Atingimento acima de 250%. Fator máximo (${fator.toFixed(2)}) aplicado.`;
+                } else {
+                    let closestLowerPercent = percentualMeta;
+                    while(closestLowerPercent >= 70 && !multiplicationFactors.hasOwnProperty(closestLowerPercent)) {
+                        closestLowerPercent--;
+                    }
+                    if (multiplicationFactors.hasOwnProperty(closestLowerPercent)) {
+                         fator = multiplicationFactors[closestLowerPercent];
+                         if (closestLowerPercent !== percentualMeta) {
+                            message = `Fator de ${fator.toFixed(2)} (para ${closestLowerPercent}%) aplicado, o mais próximo abaixo de ${percentualMeta}%.`;
+                         } else {
+                            message = `Fator de ${fator.toFixed(2)} aplicado para ${percentualMeta}% de atingimento.`;
+                         }
+                    } else {
+                        fator = 0; 
+                        message = "Não foi encontrado um fator de multiplicação para este percentual exato. Consulte a tabela.";
+                    }
+                }
+            }
+            
+            const comissaoCalculada = variavelBase * fator;
+            const ganhoTotalCalculado = salarioFixo + comissaoCalculada;
+
+            salarioFixoDisplay.textContent = formatCurrency(salarioFixo);
+            comissaoVariavelDisplay.textContent = formatCurrency(comissaoCalculada);
+            ganhoTotalDisplay.textContent = formatCurrency(ganhoTotalCalculado);
+            commissionMessageDisplayNew.textContent = message;
+        }
+
+        remunerationData.forEach((levelData, index) => {
+            const button = document.createElement('button');
+            button.classList.add('level-button');
+            button.textContent = `Nível ${levelData.nivel}`;
+            button.dataset.level = levelData.nivel;
+
+            if (index === 0) { 
+                button.classList.add('active');
+            }
+
+            button.addEventListener('click', () => {
+                document.querySelectorAll('#levelButtonsContainer .level-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                button.classList.add('active');
+                currentSelectedNivel = remunerationData.find(l => l.nivel === parseInt(button.dataset.level));
+                updateCalculator(); // Atualiza os cálculos, incluindo o novo valor de vendas
+            });
+            levelButtonsContainer.appendChild(button);
+        });
+
+        atingimentoSlider.addEventListener('input', (event) => {
+            currentAtingimentoPercent = parseInt(event.target.value);
+            atingimentoValueDisplay.textContent = `${currentAtingimentoPercent}%`;
+            updateCalculator(); // Atualiza os cálculos, incluindo o novo valor de vendas
+        });
+        
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        updateCalculator(); 
+    </script>
+</body>
+</html>
