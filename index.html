@@ -9,57 +9,57 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000; /* Preto */
-            color: #cccccc; /* Cinza claro para texto principal */
+            background-color: #0D1117; /* Quase preto, tom GitHub Dark */
+            color: #ADBAC7; /* Cinza claro para texto principal */
         }
         .header-bg {
-            background-color: #111827; /* Cinza bem escuro (gray-900) */
+            background-color: #161C22; /* Cinza escuro, tom GitHub Dark */
         }
         .accent-text { 
-            color: #ffffff; /* Branco */
+            color: #58A6FF; /* Azul claro de destaque */
         }
         .card {
-            background-color: #1f2937; /* Cinza escuro (slate-800) */
+            background-color: #161C22; /* Cinza escuro, tom GitHub Dark */
             border-radius: 0.75rem; /* 12px */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3), 0 0 8px rgba(200, 200, 200, 0.05); 
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.4), 0 0 10px rgba(88, 166, 255, 0.1); 
             padding: 1.5rem; /* 24px */
             margin-bottom: 2rem; 
-            border: 1px solid #374151; /* Cinza (gray-700) */
+            border: 1px solid #30363D; /* Borda cinza escura */
         }
         .table-header th {
-            background-color: #374151; /* Cinza (gray-700) */
-            color: #f3f4f6; /* Cinza bem claro (gray-100) */
+            background-color: #21262D; /* Cinza mais escuro para cabeçalho da tabela */
+            color: #F0F6FC; /* Texto quase branco para cabeçalho */
             font-weight: 600;
         }
         .table-body tr td {
-            color: #d1d5db; /* Cinza claro (gray-300) */
-            border-color: #374151; /* Cinza (gray-700) */
+            color: #ADBAC7; /* Texto cinza claro para corpo da tabela */
+            border-color: #30363D; /* Borda cinza escura */
         }
         .table-body tr:hover td {
-            background-color: #2a3a4a; 
+            background-color: #21262D; /* Leve destaque ao passar o mouse */
         }
 
         .level-button {
-            background-color: #374151; 
-            color: #d1d5db; 
-            padding: 0.6rem 1.9rem; 
+            background-color: #21262D; 
+            color: #ADBAC7; 
+            padding: 0.6rem 1.2rem; /* Ajustado o padding */
             border-radius: 0.5rem; /* 8px */
-            border: 1px solid #4b5563; 
+            border: 1px solid #30363D; 
             cursor: pointer;
             transition: all 0.2s ease-in-out;
             font-weight: 600;
             box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         .level-button:hover {
-            background-color: #4b5563; 
+            background-color: #30363D; 
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
         .level-button.active {
-            background-color: #e5e7eb; 
-            color: #111827; 
-            border-color: #e5e7eb; 
-            box-shadow: 0 0 10px rgba(229, 231, 235, 0.3), 0 2px 5px rgba(0,0,0,0.4); 
+            background-color: #1F6FEB; /* Azul primário de destaque */
+            color: #FFFFFF; 
+            border-color: #1F6FEB; 
+            box-shadow: 0 0 10px rgba(31, 111, 235, 0.5), 0 2px 5px rgba(0,0,0,0.4); 
             transform: translateY(-1px);
         }
 
@@ -68,24 +68,24 @@
             appearance: none;
             width: 100%;
             height: 10px; 
-            background: #374151; 
+            background: #30363D; 
             border-radius: 5px;
             outline: none;
             transition: background .2s;
         }
          input[type="range"]:hover {
-            background: #4b5563; 
+            background: #444c56; /* Cinza um pouco mais claro no hover do track */
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 24px; 
             height: 24px; 
-            background: #e5e7eb; 
+            background: #1F6FEB; /* Azul primário de destaque */
             border-radius: 50%;
             cursor: pointer;
-            border: 3px solid #111827; 
-            box-shadow: 0 0 8px rgba(229, 231, 235, 0.5); 
+            border: 3px solid #0D1117; /* Cor de fundo do body para borda do thumb */
+            box-shadow: 0 0 8px rgba(31, 111, 235, 0.7); 
             transition: transform 0.1s ease-in-out;
         }
         input[type="range"]::-webkit-slider-thumb:active {
@@ -94,45 +94,45 @@
         input[type="range"]::-moz-range-thumb {
             width: 24px;
             height: 24px;
-            background: #e5e7eb; 
+            background: #1F6FEB; 
             border-radius: 50%;
             cursor: pointer;
-            border: 3px solid #111827;
-            box-shadow: 0 0 8px rgba(229, 231, 235, 0.5);
+            border: 3px solid #0D1117;
+            box-shadow: 0 0 8px rgba(31, 111, 235, 0.7);
         }
          input[type="range"]::-moz-range-thumb:active {
             transform: scale(1.1);
         }
 
         .result-item {
-            background-color: #1f2937; 
+            background-color: #161C22; 
             padding: 1.25rem; 
             border-radius: 0.5rem; /* 8px */
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #374151; 
+            border: 1px solid #30363D; 
             box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
         }
         .result-item-label {
-            color: #9ca3af; 
+            color: #8B949E; /* Cinza médio para rótulos */
             font-size: 1rem; /* 16px */
             font-weight: 500;
         }
         .result-item-value {
-            color: #f3f4f6; 
+            color: #F0F6FC; /* Texto quase branco para valores */
             font-weight: 700;
             font-size: 1.25rem; /* 20px */
         }
         .total-gain-item {
-            background-image: linear-gradient(to right, #4b5563, #6b7280); 
+            background-image: linear-gradient(to right, #1F6FEB, #2D72D2); /* Gradiente azul */
             color: #ffffff; /* Branco */
             padding: 1.5rem; /* 24px */
             border-radius: 0.5rem; /* 8px */
-            box-shadow: 0 5px 15px rgba(107, 114, 128, 0.2); 
+            box-shadow: 0 5px 15px rgba(31, 111, 235, 0.3); 
         }
         .total-gain-item .result-item-label {
-            color: #e5e7eb; 
+            color: #C9D1D9; /* Cinza claro para rótulo no gradiente */
             font-size: 1.125rem; /* 18px */
         }
         .total-gain-item .result-item-value {
@@ -141,32 +141,32 @@
             font-weight: 800; 
         }
         .section-title {
-            color: #f3f4f6; 
+            color: #F0F6FC; 
             font-weight: 700;
             margin-bottom: 1.5rem; /* 24px */
             font-size: 1.75rem; 
         }
         .step-label {
-            color: #e5e7eb; 
+            color: #C9D1D9; 
             font-weight: 600;
             font-size: 1.125rem; /* 18px */
             margin-bottom: 0.75rem; /* 12px */
         }
         .atingimento-value-display { 
-            color: #ffffff; /* Branco */
+            color: #58A6FF; /* Azul claro de destaque */
             font-weight: 700;
             font-size: 1.5rem; 
         }
-        .sales-value-display { /* Novo estilo para o valor em vendas */
-            color: #bdc3c7; /* Cinza mais suave */
+        .sales-value-display { 
+            color: #8B949E; /* Cinza médio */
             font-size: 0.875rem; /* 14px */
             font-weight: 500;
-            margin-top: 0.25rem; /* Pequena margem superior */
-            display: block; /* Para ocupar a linha inteira abaixo da porcentagem */
-            min-height: 1.25rem; /* Para evitar que o layout salte se o valor estiver vazio inicialmente */
+            margin-top: 0.25rem; 
+            display: block; 
+            min-height: 1.25rem; 
         }
         .text-highlight { 
-            color: #e5e7eb; 
+            color: #58A6FF; /* Azul claro de destaque */
             font-weight: 600; 
         }
 
@@ -175,16 +175,16 @@
             height: 10px;
         }
         .multiplication-table-container::-webkit-scrollbar-track {
-            background: #1f2937; 
+            background: #0D1117; 
             border-radius: 10px;
         }
         .multiplication-table-container::-webkit-scrollbar-thumb {
-            background: #4b5563; 
+            background: #30363D; 
             border-radius: 10px;
-            border: 2px solid #1f2937; 
+            border: 2px solid #0D1117; 
         }
         .multiplication-table-container::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; 
+            background: #58A6FF; /* Azul ao passar o mouse na barra de rolagem */
         }
     </style>
 </head>
@@ -204,7 +204,7 @@
                     Bem-vindo ao nosso modelo de remuneração <strong class="text-highlight">OTE (On-Target Earnings)</strong>! Ele foi cuidadosamente desenhado para valorizar seu desempenho e dedicação, recompensando o alcance de metas de forma transparente e motivadora.
                 </p>
                 <p>
-                    Sua remuneração é composta por uma <strong class="text-slate-100">parcela fixa</strong> garantida e uma <strong class="text-slate-100">parcela variável</strong> dinâmica. Esta parcela variável é a sua oportunidade de aumentar significativamente seus ganhos, pois ela é calculada com base no percentual de atingimento da sua meta individual.
+                    Sua remuneração é composta por uma <strong class="text-F0F6FC">parcela fixa</strong> garantida e uma <strong class="text-F0F6FC">parcela variável</strong> dinâmica. Esta parcela variável é a sua oportunidade de aumentar significativamente seus ganhos, pois ela é calculada com base no percentual de atingimento da sua meta individual.
                 </p>
                 <p>
                     A comissão variável é ativada ao atingir <strong class="text-highlight">70% da sua meta</strong>. A partir desse ponto, um fator de multiplicação progressivo entra em jogo, turbinando seus ganhos à medida que você supera suas metas. Explore a calculadora abaixo e veja seu potencial de ganhos!
@@ -233,7 +233,7 @@
             </div>
 
             <div id="resultsNew" class="mt-6 space-y-4">
-                 <h3 class="text-xl font-semibold text-slate-100 mb-4">Sua Projeção de Ganhos:</h3>
+                 <h3 class="text-xl font-semibold text-F0F6FC mb-4">Sua Projeção de Ganhos:</h3>
                 <div class="result-item">
                     <span class="result-item-label">Salário Fixo Mensal</span>
                     <span id="salarioFixoDisplay" class="result-item-value">R$ 0,00</span>
@@ -372,7 +372,7 @@
         const levelButtonsContainer = document.getElementById('levelButtonsContainer');
         const atingimentoSlider = document.getElementById('atingimentoSlider');
         const atingimentoValueDisplay = document.getElementById('atingimentoValueDisplay');
-        const salesValueForPercentageDisplay = document.getElementById('salesValueForPercentage'); // Novo elemento
+        const salesValueForPercentageDisplay = document.getElementById('salesValueForPercentage'); 
         
         const salarioFixoDisplay = document.getElementById('salarioFixoDisplay');
         const comissaoVariavelDisplay = document.getElementById('comissaoVariavelDisplay');
@@ -387,10 +387,9 @@
 
             const salarioFixo = currentSelectedNivel.fixo;
             const variavelBase = currentSelectedNivel.variavel;
-            const metaNivel = currentSelectedNivel.meta; // Pega a meta do nível
+            const metaNivel = currentSelectedNivel.meta; 
             const percentualMeta = currentAtingimentoPercent; 
 
-            // Calcula e exibe o valor em vendas correspondente à porcentagem
             const valorVendasCalculado = (metaNivel * percentualMeta) / 100;
             salesValueForPercentageDisplay.textContent = `(${formatCurrency(valorVendasCalculado)})`;
 
@@ -452,7 +451,7 @@
                 });
                 button.classList.add('active');
                 currentSelectedNivel = remunerationData.find(l => l.nivel === parseInt(button.dataset.level));
-                updateCalculator(); // Atualiza os cálculos, incluindo o novo valor de vendas
+                updateCalculator(); 
             });
             levelButtonsContainer.appendChild(button);
         });
@@ -460,7 +459,7 @@
         atingimentoSlider.addEventListener('input', (event) => {
             currentAtingimentoPercent = parseInt(event.target.value);
             atingimentoValueDisplay.textContent = `${currentAtingimentoPercent}%`;
-            updateCalculator(); // Atualiza os cálculos, incluindo o novo valor de vendas
+            updateCalculator(); 
         });
         
         document.getElementById('currentYear').textContent = new Date().getFullYear();
