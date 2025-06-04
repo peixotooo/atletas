@@ -297,19 +297,20 @@
     </footer>
 
     <script>
-        // Dados de Remuneração
-        const remunerationData = [
-            { nivel: 1, ote: 1000, fixo: 600, variavel: 400, percFixo: '60%', percVariavel: '40%', meta: 5000 },
-            { nivel: 2, ote: 1500, fixo: 900, variavel: 600, percFixo: '60%', percVariavel: '40%', meta: 10000 },
-            { nivel: 3, ote: 2000, fixo: 1200, variavel: 800, percFixo: '60%', percVariavel: '40%', meta: 15000 },
-            { nivel: 4, ote: 2500, fixo: 1500, variavel: 1000, percFixo: '60%', percVariavel: '40%', meta: 20000 },
-            { nivel: 5, ote: 3000, fixo: 1800, variavel: 1200, percFixo: '60%', percVariavel: '40%', meta: 30000 },
-            { nivel: 6, ote: 4000, fixo: 2400, variavel: 1600, percFixo: '60%', percVariavel: '40%', meta: 45000 },
-            { nivel: 7, ote: 5000, fixo: 3000, variavel: 2000, percFixo: '60%', percVariavel: '40%', meta: 60000 },
-            { nivel: 8, ote: 6000, fixo: 3600, variavel: 2400, percFixo: '60%', percVariavel: '40%', meta: 75000 },
-            { nivel: 9, ote: 7000, fixo: 4200, variavel: 2800, percFixo: '60%', percVariavel: '40%', meta: 85000 },
-            { nivel: 10, ote: 8000, fixo: 4800, variavel: 3200, percFixo: '60%', percVariavel: '40%', meta: 100000 }
-        ];
+       // Dados de Remuneração (atualizados conforme tabela)
+const remunerationData = [
+    { nivel: 1, ote: 500, fixo: 0, variavel: 500, percFixo: '0%', percVariavel: '100%', meta: 3000 },
+    { nivel: 2, ote: 1000, fixo: 500, variavel: 500, percFixo: '50%', percVariavel: '50%', meta: 6000 },
+    { nivel: 3, ote: 1500, fixo: 900, variavel: 600, percFixo: '60%', percVariavel: '40%', meta: 9000 },
+    { nivel: 4, ote: 2500, fixo: 1500, variavel: 1000, percFixo: '60%', percVariavel: '40%', meta: 15000 },
+    { nivel: 5, ote: 3000, fixo: 2100, variavel: 900, percFixo: '70%', percVariavel: '30%', meta: 20000 },
+    { nivel: 6, ote: 4000, fixo: 2800, variavel: 1200, percFixo: '70%', percVariavel: '30%', meta: 30000 },
+    { nivel: 7, ote: 5000, fixo: 3500, variavel: 1500, percFixo: '70%', percVariavel: '30%', meta: 40000 },
+    { nivel: 8, ote: 6000, fixo: 4200, variavel: 1800, percFixo: '70%', percVariavel: '30%', meta: 50000 },
+    { nivel: 9, ote: 7000, fixo: 4900, variavel: 2100, percFixo: '70%', percVariavel: '30%', meta: 60000 },
+    { nivel: 10, ote: 8000, fixo: 5600, variavel: 2400, percFixo: '70%', percVariavel: '30%', meta: 70000 }
+];
+
 
         // Fatores de Multiplicação
         const multiplicationFactors = {
