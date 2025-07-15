@@ -152,19 +152,7 @@
             font-size: 1.125rem; /* 18px */
             margin-bottom: 0.75rem; /* 12px */
         }
-        .atingimento-value-display { 
-            color: #58A6FF; /* Azul claro de destaque */
-            font-weight: 700;
-            font-size: 1.5rem; 
-        }
-        .sales-value-display { 
-            color: #00FFDA; /* Cinza médio */
-            font-size: 0.875rem; /* 14px */
-            font-weight: 500;
-            margin-top: 0.25rem; 
-            display: block; 
-            min-height: 1.25rem; 
-        }
+        /* As classes .atingimento-value-display e .sales-value-display foram removidas pois os estilos agora são aplicados diretamente com Tailwind */
         .text-highlight { 
             color: #58A6FF; /* Azul claro de destaque */
             font-weight: 600; 
@@ -214,7 +202,7 @@
 
         <section id="calculator" class="card">
             <h2 class="section-title">Simule Seus Ganhos Agora!</h2>
-            
+           
             <div class="mb-8">
                 <label class="step-label block">1. Escolha seu Nível de Atleta:</label>
                 <div id="levelButtonsContainer" class="flex flex-wrap gap-3">
@@ -223,17 +211,21 @@
 
             <div class="mb-10">
                 <label for="atingimentoSlider" class="step-label block">2. Indique o Percentual de Meta Atingido:</label>
-                <div class="flex items-center gap-4">
-                    <input type="range" id="atingimentoSlider" name="atingimentoSlider" min="0" max="250" value="100" class="flex-grow">
-                    <div class="w-28 text-right">
-                        <span id="atingimentoValueDisplay" class="atingimento-value-display">100%</span>
-                        <span class="section-title">META: </span>
-                        <span id="salesValueForPercentage" class="sales-value-display">(R$ 0,00)</span>
-
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div class="flex-grow w-full">
+                        <input type="range" id="atingimentoSlider" name="atingimentoSlider" min="0" max="250" value="100">
+                    </div>
+            
+                    <div class="bg-[#21262D] p-4 rounded-lg border border-[#30363D] text-center w-full md:w-auto min-w-[220px]">
+                        <span id="atingimentoValueDisplay" class="block text-3xl font-bold text-blue-400">100%</span>
+                        
+                        <div class="text-sm text-slate-400 mt-1">
+                            Meta de Vendas: 
+                            <span id="salesValueForPercentage" class="font-semibold text-slate-200"></span>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <div id="resultsNew" class="mt-6 space-y-4">
                  <h3 class="text-xl font-semibold text-F0F6FC mb-4">Sua Projeção de Ganhos:</h3>
                 <div class="result-item">
@@ -251,7 +243,7 @@
                 <p id="commissionMessageNew" class="text-sm text-center mt-4 text-slate-400 italic"></p>
             </div>
         </section>
-        
+       
         <section id="remuneration-table" class="card">
             <h2 class="section-title">Detalhes dos Níveis de Remuneração (OTE)</h2>
             <div class="overflow-x-auto rounded-lg shadow-md">
@@ -299,174 +291,176 @@
     </footer>
 
     <script>
-       // Dados de Remuneração (atualizados conforme tabela)
-const remunerationData = [
-    { nivel: 1, ote: 500, fixo: 0, variavel: 500, percFixo: '0%', percVariavel: '100%', meta: 3000 },
-    { nivel: 2, ote: 1000, fixo: 500, variavel: 500, percFixo: '50%', percVariavel: '50%', meta: 6000 },
-    { nivel: 3, ote: 1500, fixo: 900, variavel: 600, percFixo: '60%', percVariavel: '40%', meta: 9000 },
-    { nivel: 4, ote: 2500, fixo: 1500, variavel: 1000, percFixo: '60%', percVariavel: '40%', meta: 15000 },
-    { nivel: 5, ote: 3000, fixo: 2100, variavel: 900, percFixo: '70%', percVariavel: '30%', meta: 20000 },
-    { nivel: 6, ote: 4000, fixo: 2800, variavel: 1200, percFixo: '70%', percVariavel: '30%', meta: 30000 },
-    { nivel: 7, ote: 5000, fixo: 3500, variavel: 1500, percFixo: '70%', percVariavel: '30%', meta: 40000 },
-    { nivel: 8, ote: 6000, fixo: 4200, variavel: 1800, percFixo: '70%', percVariavel: '30%', meta: 50000 },
-    { nivel: 9, ote: 7000, fixo: 4900, variavel: 2100, percFixo: '70%', percVariavel: '30%', meta: 60000 },
-    { nivel: 10, ote: 8000, fixo: 5600, variavel: 2400, percFixo: '70%', percVariavel: '30%', meta: 70000 }
-];
+    // Dados de Remuneração (atualizados conforme tabela)
+    const remunerationData = [
+        { nivel: 1, ote: 500, fixo: 0, variavel: 500, percFixo: '0%', percVariavel: '100%', meta: 3000 },
+        { nivel: 2, ote: 1000, fixo: 500, variavel: 500, percFixo: '50%', percVariavel: '50%', meta: 6000 },
+        { nivel: 3, ote: 1500, fixo: 900, variavel: 600, percFixo: '60%', percVariavel: '40%', meta: 9000 },
+        { nivel: 4, ote: 2500, fixo: 1500, variavel: 1000, percFixo: '60%', percVariavel: '40%', meta: 15000 },
+        { nivel: 5, ote: 3000, fixo: 2100, variavel: 900, percFixo: '70%', percVariavel: '30%', meta: 20000 },
+        { nivel: 6, ote: 4000, fixo: 2800, variavel: 1200, percFixo: '70%', percVariavel: '30%', meta: 30000 },
+        { nivel: 7, ote: 5000, fixo: 3500, variavel: 1500, percFixo: '70%', percVariavel: '30%', meta: 40000 },
+        { nivel: 8, ote: 6000, fixo: 4200, variavel: 1800, percFixo: '70%', percVariavel: '30%', meta: 50000 },
+        { nivel: 9, ote: 7000, fixo: 4900, variavel: 2100, percFixo: '70%', percVariavel: '30%', meta: 60000 },
+        { nivel: 10, ote: 8000, fixo: 5600, variavel: 2400, percFixo: '70%', percVariavel: '30%', meta: 70000 }
+    ];
 
+    // Fatores de Multiplicação
+    const multiplicationFactors = {
+        70: 0.50, 71: 0.51, 72: 0.52, 73: 0.53, 74: 0.54, 75: 0.55, 76: 0.56, 77: 0.57, 78: 0.58, 79: 0.59,
+        80: 0.60, 81: 0.61, 82: 0.62, 83: 0.63, 84: 0.64, 85: 0.65, 86: 0.66, 87: 0.67, 88: 0.68, 89: 0.69,
+        90: 0.70, 91: 0.71, 92: 0.72, 93: 0.73, 94: 0.74, 95: 0.75, 96: 0.76, 97: 0.77, 98: 0.78, 99: 0.79,
+        100: 1.00, 101: 1.01, 102: 1.02, 103: 1.03, 104: 1.04, 105: 1.05, 106: 1.06, 107: 1.07, 108: 1.08, 109: 1.09,
+        110: 1.10, 111: 1.11, 112: 1.12, 113: 1.13, 114: 1.14, 115: 1.15, 116: 1.16, 117: 1.17, 118: 1.18, 119: 1.19,
+        120: 1.30, 121: 1.31, 122: 1.32, 123: 1.33, 124: 1.34, 125: 1.35, 126: 1.36, 127: 1.37, 128: 1.38, 129: 1.39,
+        130: 1.40, 131: 1.41, 132: 1.42, 133: 1.43, 134: 1.44, 135: 1.45, 136: 1.46, 137: 1.47, 138: 1.48, 139: 1.49,
+        140: 1.50, 141: 1.51, 142: 1.52, 143: 1.53, 144: 1.54, 145: 1.55, 146: 1.56, 147: 1.57, 148: 1.58, 149: 1.59,
+        150: 1.70, 151: 1.71, 152: 1.72, 153: 1.73, 154: 1.74, 155: 1.75, 156: 1.76, 157: 1.77, 158: 1.78, 159: 1.79,
+        160: 1.80, 161: 1.81, 162: 1.82, 163: 1.83, 164: 1.84, 165: 1.85, 166: 1.86, 167: 1.87, 168: 1.88, 169: 1.89,
+        170: 1.90, 171: 1.91, 172: 1.92, 173: 1.93, 174: 1.94, 175: 1.95, 176: 1.96, 177: 1.97, 178: 1.98, 179: 1.99,
+        180: 2.00, 181: 2.01, 182: 2.02, 183: 2.03, 184: 2.04, 185: 2.05, 186: 2.06, 187: 2.07, 188: 2.08, 189: 2.09,
+        190: 2.10, 191: 2.11, 192: 2.12, 193: 2.13, 194: 2.14, 195: 2.15, 196: 2.16, 197: 2.17, 198: 2.18, 199: 2.19,
+        200: 2.20, 201: 2.21, 202: 2.22, 203: 2.23, 204: 2.24, 205: 2.25, 206: 2.26, 207: 2.27, 208: 2.28, 209: 2.29,
+        210: 2.30, 211: 2.31, 212: 2.32, 213: 2.33, 214: 2.34, 215: 2.35, 216: 2.36, 217: 2.37, 218: 2.38, 219: 2.39,
+        220: 2.40, 221: 2.41, 222: 2.42, 223: 2.43, 224: 2.44, 225: 2.45, 226: 2.46, 227: 2.47, 228: 2.48, 229: 2.49,
+        230: 2.50, 231: 2.51, 232: 2.52, 233: 2.53, 234: 2.54, 235: 2.55, 236: 2.56, 237: 2.57, 238: 2.58, 239: 2.59,
+        240: 2.60, 241: 2.61, 242: 2.62, 243: 2.63, 244: 2.64, 245: 2.65, 246: 2.66, 247: 2.67, 248: 2.68, 249: 2.69,
+        250: 2.70
+    };
+   
+    const formatCurrency = (value) => {
+        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    };
 
-        // Fatores de Multiplicação
-        const multiplicationFactors = {
-            70: 0.50, 71: 0.51, 72: 0.52, 73: 0.53, 74: 0.54, 75: 0.55, 76: 0.56, 77: 0.57, 78: 0.58, 79: 0.59,
-            80: 0.60, 81: 0.61, 82: 0.62, 83: 0.63, 84: 0.64, 85: 0.65, 86: 0.66, 87: 0.67, 88: 0.68, 89: 0.69,
-            90: 0.70, 91: 0.71, 92: 0.72, 93: 0.73, 94: 0.74, 95: 0.75, 96: 0.76, 97: 0.77, 98: 0.78, 99: 0.79,
-            100: 1.00, 101: 1.01, 102: 1.02, 103: 1.03, 104: 1.04, 105: 1.05, 106: 1.06, 107: 1.07, 108: 1.08, 109: 1.09,
-            110: 1.10, 111: 1.11, 112: 1.12, 113: 1.13, 114: 1.14, 115: 1.15, 116: 1.16, 117: 1.17, 118: 1.18, 119: 1.19,
-            120: 1.30, 121: 1.31, 122: 1.32, 123: 1.33, 124: 1.34, 125: 1.35, 126: 1.36, 127: 1.37, 128: 1.38, 129: 1.39,
-            130: 1.40, 131: 1.41, 132: 1.42, 133: 1.43, 134: 1.44, 135: 1.45, 136: 1.46, 137: 1.47, 138: 1.48, 139: 1.49,
-            140: 1.50, 141: 1.51, 142: 1.52, 143: 1.53, 144: 1.54, 145: 1.55, 146: 1.56, 147: 1.57, 148: 1.58, 149: 1.59,
-            150: 1.70, 151: 1.71, 152: 1.72, 153: 1.73, 154: 1.74, 155: 1.75, 156: 1.76, 157: 1.77, 158: 1.78, 159: 1.79,
-            160: 1.80, 161: 1.81, 162: 1.82, 163: 1.83, 164: 1.84, 165: 1.85, 166: 1.86, 167: 1.87, 168: 1.88, 169: 1.89,
-            170: 1.90, 171: 1.91, 172: 1.92, 173: 1.93, 174: 1.94, 175: 1.95, 176: 1.96, 177: 1.97, 178: 1.98, 179: 1.99,
-            180: 2.00, 181: 2.01, 182: 2.02, 183: 2.03, 184: 2.04, 185: 2.05, 186: 2.06, 187: 2.07, 188: 2.08, 189: 2.09,
-            190: 2.10, 191: 2.11, 192: 2.12, 193: 2.13, 194: 2.14, 195: 2.15, 196: 2.16, 197: 2.17, 198: 2.18, 199: 2.19,
-            200: 2.20, 201: 2.21, 202: 2.22, 203: 2.23, 204: 2.24, 205: 2.25, 206: 2.26, 207: 2.27, 208: 2.28, 209: 2.29,
-            210: 2.30, 211: 2.31, 212: 2.32, 213: 2.33, 214: 2.34, 215: 2.35, 216: 2.36, 217: 2.37, 218: 2.38, 219: 2.39,
-            220: 2.40, 221: 2.41, 222: 2.42, 223: 2.43, 224: 2.44, 225: 2.45, 226: 2.46, 227: 2.47, 228: 2.48, 229: 2.49,
-            230: 2.50, 231: 2.51, 232: 2.52, 233: 2.53, 234: 2.54, 235: 2.55, 236: 2.56, 237: 2.57, 238: 2.58, 239: 2.59,
-            240: 2.60, 241: 2.61, 242: 2.62, 243: 2.63, 244: 2.64, 245: 2.65, 246: 2.66, 247: 2.67, 248: 2.68, 249: 2.69,
-            250: 2.70
-        };
-        
-        const formatCurrency = (value) => {
-            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        };
-
-        const remunerationTableBody = document.getElementById('remunerationLevelsTableBody');
-        remunerationData.forEach(level => {
-            const row = remunerationTableBody.insertRow();
-            row.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
-            row.innerHTML = `
-                <td class="px-5 py-4 whitespace-nowrap text-sm">${level.nivel}</td>
-                <td class="px-5 py-4 whitespace-nowrap text-sm">${formatCurrency(level.ote)}</td>
-                <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-slate-100">${formatCurrency(level.fixo)}</td>
-                <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-highlight">${formatCurrency(level.variavel)}</td>
-                <td class="px-5 py-4 whitespace-nowrap text-sm">${level.percFixo}</td>
-                <td class="px-5 py-4 whitespace-nowrap text-sm">${level.percVariavel}</td>
-                <td class="px-5 py-4 whitespace-nowrap text-sm font-semibold">${formatCurrency(level.meta)}</td>
-            `;
-        });
-
-        const multiplicationTableBody = document.getElementById('multiplicationFactorsTableBody');
-        for (const perc in multiplicationFactors) {
-            const row = multiplicationTableBody.insertRow();
-            row.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
-            row.innerHTML = `
-                <td class="px-5 py-3 whitespace-nowrap text-sm">${perc}%</td>
-                <td class="px-5 py-3 whitespace-nowrap text-sm font-semibold text-highlight">${multiplicationFactors[perc].toFixed(2)}</td>
-            `;
-        }
-        const rowLessThan70 = multiplicationTableBody.insertRow(0);
-        rowLessThan70.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
-        rowLessThan70.innerHTML = `
-            <td class="px-5 py-3 whitespace-nowrap text-sm font-medium text-slate-100">Abaixo de 70%</td>
-            <td class="px-5 py-3 whitespace-nowrap text-sm font-bold text-slate-100">0.00</td>
+    const remunerationTableBody = document.getElementById('remunerationLevelsTableBody');
+    remunerationData.forEach(level => {
+        const row = remunerationTableBody.insertRow();
+        row.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
+        row.innerHTML = `
+            <td class="px-5 py-4 whitespace-nowrap text-sm">${level.nivel}</td>
+            <td class="px-5 py-4 whitespace-nowrap text-sm">${formatCurrency(level.ote)}</td>
+            <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-slate-100">${formatCurrency(level.fixo)}</td>
+            <td class="px-5 py-4 whitespace-nowrap text-sm font-medium text-highlight">${formatCurrency(level.variavel)}</td>
+            <td class="px-5 py-4 whitespace-nowrap text-sm">${level.percFixo}</td>
+            <td class="px-5 py-4 whitespace-nowrap text-sm">${level.percVariavel}</td>
+            <td class="px-5 py-4 whitespace-nowrap text-sm font-semibold">${formatCurrency(level.meta)}</td>
         `;
+    });
 
-        const levelButtonsContainer = document.getElementById('levelButtonsContainer');
-        const atingimentoSlider = document.getElementById('atingimentoSlider');
-        const atingimentoValueDisplay = document.getElementById('atingimentoValueDisplay');
-        const salesValueForPercentageDisplay = document.getElementById('salesValueForPercentage'); 
+    const multiplicationTableBody = document.getElementById('multiplicationFactorsTableBody');
+    for (const perc in multiplicationFactors) {
+        const row = multiplicationTableBody.insertRow();
+        row.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
+        row.innerHTML = `
+            <td class="px-5 py-3 whitespace-nowrap text-sm">${perc}%</td>
+            <td class="px-5 py-3 whitespace-nowrap text-sm font-semibold text-highlight">${multiplicationFactors[perc].toFixed(2)}</td>
+        `;
+    }
+    const rowLessThan70 = multiplicationTableBody.insertRow(0);
+    rowLessThan70.classList.add('hover:bg-slate-700/50', 'transition-colors', 'duration-150');
+    rowLessThan70.innerHTML = `
+        <td class="px-5 py-3 whitespace-nowrap text-sm font-medium text-slate-100">Abaixo de 70%</td>
+        <td class="px-5 py-3 whitespace-nowrap text-sm font-bold text-slate-100">0.00</td>
+    `;
+
+    const levelButtonsContainer = document.getElementById('levelButtonsContainer');
+    const atingimentoSlider = document.getElementById('atingimentoSlider');
+    const atingimentoValueDisplay = document.getElementById('atingimentoValueDisplay');
+    const salesValueForPercentageDisplay = document.getElementById('salesValueForPercentage'); 
+   
+    const salarioFixoDisplay = document.getElementById('salarioFixoDisplay');
+    const comissaoVariavelDisplay = document.getElementById('comissaoVariavelDisplay');
+    const ganhoTotalDisplay = document.getElementById('ganhoTotalDisplay');
+    const commissionMessageDisplayNew = document.getElementById('commissionMessageNew');
+
+    let currentSelectedNivel = remunerationData[0]; 
+    let currentAtingimentoPercent = parseInt(atingimentoSlider.value);
+
+    function updateCalculator() {
+        if (!currentSelectedNivel) return;
+
+        const salarioFixo = currentSelectedNivel.fixo;
+        const variavelBase = currentSelectedNivel.variavel;
+        const metaNivel = currentSelectedNivel.meta; 
+        const percentualMeta = currentAtingimentoPercent; 
+
+        const valorVendasCalculado = (metaNivel * percentualMeta) / 100;
         
-        const salarioFixoDisplay = document.getElementById('salarioFixoDisplay');
-        const comissaoVariavelDisplay = document.getElementById('comissaoVariavelDisplay');
-        const ganhoTotalDisplay = document.getElementById('ganhoTotalDisplay');
-        const commissionMessageDisplayNew = document.getElementById('commissionMessageNew');
-
-        let currentSelectedNivel = remunerationData[0]; 
-        let currentAtingimentoPercent = parseInt(atingimentoSlider.value);
-
-        function updateCalculator() {
-            if (!currentSelectedNivel) return;
-
-            const salarioFixo = currentSelectedNivel.fixo;
-            const variavelBase = currentSelectedNivel.variavel;
-            const metaNivel = currentSelectedNivel.meta; 
-            const percentualMeta = currentAtingimentoPercent; 
-
-            const valorVendasCalculado = (metaNivel * percentualMeta) / 100;
-            salesValueForPercentageDisplay.textContent = `(${formatCurrency(valorVendasCalculado)})`;
+        // --- AJUSTE SUGERIDO NO JAVASCRIPT ---
+        // Removi os parênteses que eram adicionados aqui, pois o texto fixo "Meta de Vendas:" já está no HTML.
+        salesValueForPercentageDisplay.textContent = formatCurrency(valorVendasCalculado);
 
 
-            let fator = 0;
-            let message = "";
+        let fator = 0;
+        let message = "";
 
-            if (percentualMeta < 70) {
-                fator = 0;
-                message = "Com atingimento abaixo de 70%, a comissão variável não é ativada.";
+        if (percentualMeta < 70) {
+            fator = 0;
+            message = "Com atingimento abaixo de 70%, a comissão variável não é ativada.";
+        } else {
+            if (multiplicationFactors.hasOwnProperty(percentualMeta)) {
+                fator = multiplicationFactors[percentualMeta];
+                message = `Fator de ${fator.toFixed(2)} aplicado para ${percentualMeta}% de atingimento.`;
+            } else if (percentualMeta > 250) {
+                fator = multiplicationFactors[250]; 
+                message = `Uau! Atingimento acima de 250%. Fator máximo (${fator.toFixed(2)}) aplicado.`;
             } else {
-                if (multiplicationFactors.hasOwnProperty(percentualMeta)) {
-                    fator = multiplicationFactors[percentualMeta];
-                    message = `Fator de ${fator.toFixed(2)} aplicado para ${percentualMeta}% de atingimento.`;
-                } else if (percentualMeta > 250) {
-                    fator = multiplicationFactors[250]; 
-                    message = `Uau! Atingimento acima de 250%. Fator máximo (${fator.toFixed(2)}) aplicado.`;
+                let closestLowerPercent = percentualMeta;
+                while(closestLowerPercent >= 70 && !multiplicationFactors.hasOwnProperty(closestLowerPercent)) {
+                    closestLowerPercent--;
+                }
+                if (multiplicationFactors.hasOwnProperty(closestLowerPercent)) {
+                     fator = multiplicationFactors[closestLowerPercent];
+                     if (closestLowerPercent !== percentualMeta) {
+                         message = `Fator de ${fator.toFixed(2)} (para ${closestLowerPercent}%) aplicado, o mais próximo abaixo de ${percentualMeta}%.`;
+                     } else {
+                         message = `Fator de ${fator.toFixed(2)} aplicado para ${percentualMeta}% de atingimento.`;
+                     }
                 } else {
-                    let closestLowerPercent = percentualMeta;
-                    while(closestLowerPercent >= 70 && !multiplicationFactors.hasOwnProperty(closestLowerPercent)) {
-                        closestLowerPercent--;
-                    }
-                    if (multiplicationFactors.hasOwnProperty(closestLowerPercent)) {
-                         fator = multiplicationFactors[closestLowerPercent];
-                         if (closestLowerPercent !== percentualMeta) {
-                            message = `Fator de ${fator.toFixed(2)} (para ${closestLowerPercent}%) aplicado, o mais próximo abaixo de ${percentualMeta}%.`;
-                         } else {
-                            message = `Fator de ${fator.toFixed(2)} aplicado para ${percentualMeta}% de atingimento.`;
-                         }
-                    } else {
-                        fator = 0; 
-                        message = "Não foi encontrado um fator de multiplicação para este percentual exato. Consulte a tabela.";
-                    }
+                    fator = 0; 
+                    message = "Não foi encontrado um fator de multiplicação para este percentual exato. Consulte a tabela.";
                 }
             }
-            
-            const comissaoCalculada = variavelBase * fator;
-            const ganhoTotalCalculado = salarioFixo + comissaoCalculada;
+        }
+       
+        const comissaoCalculada = variavelBase * fator;
+        const ganhoTotalCalculado = salarioFixo + comissaoCalculada;
 
-            salarioFixoDisplay.textContent = formatCurrency(salarioFixo);
-            comissaoVariavelDisplay.textContent = formatCurrency(comissaoCalculada);
-            ganhoTotalDisplay.textContent = formatCurrency(ganhoTotalCalculado);
-            commissionMessageDisplayNew.textContent = message;
+        salarioFixoDisplay.textContent = formatCurrency(salarioFixo);
+        comissaoVariavelDisplay.textContent = formatCurrency(comissaoCalculada);
+        ganhoTotalDisplay.textContent = formatCurrency(ganhoTotalCalculado);
+        commissionMessageDisplayNew.textContent = message;
+    }
+
+    remunerationData.forEach((levelData, index) => {
+        const button = document.createElement('button');
+        button.classList.add('level-button');
+        button.textContent = `Nível ${levelData.nivel}`;
+        button.dataset.level = levelData.nivel;
+
+        if (index === 0) { 
+            button.classList.add('active');
         }
 
-        remunerationData.forEach((levelData, index) => {
-            const button = document.createElement('button');
-            button.classList.add('level-button');
-            button.textContent = `Nível ${levelData.nivel}`;
-            button.dataset.level = levelData.nivel;
-
-            if (index === 0) { 
-                button.classList.add('active');
-            }
-
-            button.addEventListener('click', () => {
-                document.querySelectorAll('#levelButtonsContainer .level-button').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                button.classList.add('active');
-                currentSelectedNivel = remunerationData.find(l => l.nivel === parseInt(button.dataset.level));
-                updateCalculator(); 
+        button.addEventListener('click', () => {
+            document.querySelectorAll('#levelButtonsContainer .level-button').forEach(btn => {
+                btn.classList.remove('active');
             });
-            levelButtonsContainer.appendChild(button);
-        });
-
-        atingimentoSlider.addEventListener('input', (event) => {
-            currentAtingimentoPercent = parseInt(event.target.value);
-            atingimentoValueDisplay.textContent = `${currentAtingimentoPercent}%`;
+            button.classList.add('active');
+            currentSelectedNivel = remunerationData.find(l => l.nivel === parseInt(button.dataset.level));
             updateCalculator(); 
         });
-        
-        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        levelButtonsContainer.appendChild(button);
+    });
+
+    atingimentoSlider.addEventListener('input', (event) => {
+        currentAtingimentoPercent = parseInt(event.target.value);
+        atingimentoValueDisplay.textContent = `${currentAtingimentoPercent}%`;
         updateCalculator(); 
+    });
+   
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    updateCalculator(); 
     </script>
 </body>
 </html>
